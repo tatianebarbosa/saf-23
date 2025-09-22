@@ -1,35 +1,31 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Ticket } from '@/types/tickets';
-import { MOCK_TICKETS } from '@/data';
 
 interface TicketContextType {
   tickets: Ticket[];
-  addTicket: (ticket: Ticket) => void;
-  updateTicket: (id: string, updates: Partial<Ticket>) => void;
-  deleteTicket: (id: string) => void;
+  addTicket: (newTicket: Ticket) => void;
+  updateTicket: (updatedTicket: Ticket) => void;
 }
 
 const TicketContext = createContext<TicketContextType | undefined>(undefined);
 
 export const TicketProvider = ({ children }: { children: ReactNode }) => {
-  const [tickets, setTickets] = useState<Ticket[]>(MOCK_TICKETS);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
 
   const addTicket = (newTicket: Ticket) => {
     setTickets((prevTickets) => [...prevTickets, newTicket]);
   };
 
-  const updateTicket = (id: string, updates: Partial<Ticket>) => {
+  const updateTicket = (updatedTicket: Ticket) => {
     setTickets((prevTickets) =>
-      prevTickets.map((ticket) => (ticket.id === id ? { ...ticket, ...updates } : ticket))
+      prevTickets.map((ticket) =>
+        ticket.id === updatedTicket.id ? updatedTicket : ticket
+      )
     );
   };
 
-  const deleteTicket = (id: string) => {
-    setTickets((prevTickets) => prevTickets.filter((ticket) => ticket.id !== id));
-  };
-
   return (
-    <TicketContext.Provider value={{ tickets, addTicket, updateTicket, deleteTicket }}>
+    <TicketContext.Provider value={{ tickets, addTicket, updateTicket }}>
       {children}
     </TicketContext.Provider>
   );
@@ -37,7 +33,7 @@ export const TicketProvider = ({ children }: { children: ReactNode }) => {
 
 export const useTickets = () => {
   const context = useContext(TicketContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useTickets must be used within a TicketProvider');
   }
   return context;
