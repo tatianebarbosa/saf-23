@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Ticket } from '@/types/tickets';
-import { MOCK_TICKETS } from import.meta.env.PROD ? '@/data/mockTickets.prod.ts' : '@/data/mockTickets.ts';
+const MOCK_TICKETS_DEV = import.meta.env.DEV ? (await import('../../mockTickets.dev.ts')).MOCK_TICKETS : [];
 
 interface TicketContextType {
   tickets: Ticket[];
@@ -12,7 +12,7 @@ interface TicketContextType {
 const TicketContext = createContext<TicketContextType | undefined>(undefined);
 
 export const TicketProvider = ({ children }: { children: ReactNode }) => {
-  const [tickets, setTickets] = useState<Ticket[]>(MOCK_TICKETS);
+  const [tickets, setTickets] = useState<Ticket[]>(MOCK_TICKETS_DEV);
 
   const addTicket = (newTicket: Ticket) => {
     setTickets((prevTickets) => [...prevTickets, newTicket]);
