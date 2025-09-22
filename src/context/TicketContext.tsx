@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Ticket } from '@/types/tickets';
-import { MOCK_TICKETS } from '@/data/mockTickets.ts';
+import { MOCK_TICKETS } from import.meta.env.PROD ? '@/data/mockTickets.prod.ts' : '@/data/mockTickets.ts';
 
 interface TicketContextType {
   tickets: Ticket[];

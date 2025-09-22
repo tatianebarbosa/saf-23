@@ -99,7 +99,7 @@ temp/
 # Sensitive data files
 /public/data/*.csv
 /public/data/*.json
-/src/data/
+
 *.backup
 *.bak
 
