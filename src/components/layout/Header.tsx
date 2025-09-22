@@ -37,7 +37,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useAuthStore } from "@/stores/authStore";
 import { useCoordinatorStore } from "@/stores/coordinatorStore";
-import logoMaplebear from "/logo-maplebear.png";
+
 
 interface HeaderProps {
   activeSection?: string;
@@ -82,7 +82,7 @@ const Header = ({ activeSection, onSectionChange }: HeaderProps) => {
           <div className="flex items-center gap-4">
             <Link to="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <img 
-                src={logoMaplebear} 
+                src="/logo-maplebear.png" 
                 alt="Maple Bear SAF" 
                 className="w-10 h-10 rounded-full border-2 border-white/20"
               />
